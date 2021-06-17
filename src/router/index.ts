@@ -1,5 +1,5 @@
-import { facts } from '@/assets/facts'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { facts } from '@/assets/facts'
 import Home from '../views/Home.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -15,17 +15,17 @@ const routes: Array<RouteRecordRaw> = [
     beforeEnter: (to, _, next) => {
       const { id } = to.params
 
-      if(Array.isArray(id)) {
-        next({path: '/error'})
+      if (Array.isArray(id)) {
+        next({ path: '/error' })
+        return
+      }
+      
+      const index = parseInt(id)
+      if (index < 0 || index >= facts.length) {
+        next({ path: '/error' })
         return
       }
 
-      //is a valid index number
-      const index = parseInt(id)
-      if(index < 0 || index >= facts.length) {
-        next({path: '/error'})
-        return
-      }
       next()
     }
   },
@@ -42,7 +42,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 
